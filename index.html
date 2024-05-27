@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Portfolio Manager</h1>
+    </header>
+    <main>
+        <div class="container">
+            <nav>
+                <button onclick="showAddStockForm()">Add Stock</button>
+                <button onclick="showRemoveStockForm()">Remove Stock</button>
+                <button onclick="showEditStockForm()">Edit Stock</button>
+                <button onclick="displayPortfolio()">Display Portfolio</button>
+                <button onclick="projectFutureValues()">Future Projection</button>
+                <button onclick="savePortfolio()">Save Portfolio</button>
+                <button onclick="loadPortfolio()">Load Portfolio</button>
+                <button onclick="exit()">Exit</button>
+            </nav>
+            <div id="output"></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
