@@ -1,22 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ALPHA_VANTAGE_API_KEY = 'DWGDOKGZZC8TDSAD';
-    const ALPHA_VANTAGE_URL = 'https://www.alphavantage.co/query';
+    const POLYGON_API_KEY = 'uuoE4dQrhrrV9Ytcs6Jm5x9szbsFBuop';
+    const POLYGON_URL = 'https://api.polygon.io/v1/open-close/crypto/';
 
     async function getClosingPrice(symbol, date) {
         try {
-            const response = await fetch(`${ALPHA_VANTAGE_URL}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`);
+            const response = await fetch(`${POLYGON_URL}${symbol}/${date}?apiKey=${POLYGON_API_KEY}`);
             const data = await response.json();
-            const timeSeries = data['Time Series (Daily)'];
-            const dates = Object.keys(timeSeries);
-            let selectedDate = new Date(date);
-            selectedDate.setHours(0, 0, 0, 0);
-
-            while (!timeSeries[selectedDate.toISOString().split('T')[0]] && selectedDate < new Date()) {
-                selectedDate.setDate(selectedDate.getDate() + 1); // If market was closed, get next working day
-            }
-
-            const closingDate = selectedDate.toISOString().split('T')[0];
-            const closingPrice = parseFloat(timeSeries[closingDate]['4. close']);
+            const closingPrice = parseFloat(data.close);
             return closingPrice;
         } catch (error) {
             console.error("Error fetching closing price for symbol:", symbol, "on date:", date);
