@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ALPHA_VANTAGE_API_KEY = 'RC8L94IHH9CWILQA';
+    const ALPHA_VANTAGE_API_KEY = 'PI3CT37V5KD1D5E2';
     const ALPHA_VANTAGE_URL = 'https://www.alphavantage.co/query';
 
     async function getRealTimePrice(symbol) {
