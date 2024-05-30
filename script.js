@@ -2,15 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const ALPHA_VANTAGE_API_KEY = 'RC8L94IHH9CWILQA';
     const ALPHA_VANTAGE_URL = 'https://www.alphavantage.co/query';
 
-    async function getRealTimePrice(symbol) {
+    async function getClosingPrice(symbol, date) {
         try {
-            const response = await fetch(`${ALPHA_VANTAGE_URL}?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${ALPHA_VANTAGE_API_KEY}`);
+            const response = await fetch(`${ALPHA_VANTAGE_URL}?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`);
             const data = await response.json();
-            const lastRefreshed = data['Meta Data']['3. Last Refreshed'];
-            const currentPrice = parseFloat(data['Time Series (5min)'][lastRefreshed]['1. open']);
-            return currentPrice;
+            const timeSeries = data['Time Series (Daily)'];
+            const dates = Object.keys(timeSeries);
+            let selectedDate = new Date(date);
+            selectedDate.setHours(0, 0, 0, 0);
+
+            while (!timeSeries[selectedDate.toISOString().split('T')[0]] && selectedDate < new Date()) {
+                selectedDate.setDate(selectedDate.getDate() + 1); // If market was closed, get next working day
+            }
+
+            const closingDate = selectedDate.toISOString().split('T')[0];
+            const closingPrice = parseFloat(timeSeries[closingDate]['4. close']);
+            return closingPrice;
         } catch (error) {
-            console.error("Error fetching data for symbol:", symbol);
+            console.error("Error fetching closing price for symbol:", symbol, "on date:", date);
             return null;
         }
     }
@@ -22,10 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolio = {
         stocks: {},
 
-        addStock: function(symbol, quantity, purchasePrice, purchaseDate, sector) {
+        addStock: function(symbol, quantity, purchaseDate, sector) {
             this.stocks[symbol] = {
                 quantity,
-                purchasePrice,
                 purchaseDate,
                 sector
             };
@@ -40,13 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
 
-        editStock: function(symbol, quantity, purchasePrice, purchaseDate, sector) {
+        editStock: function(symbol, quantity, purchaseDate, sector) {
             if (symbol in this.stocks) {
                 if (quantity !== undefined) {
                     this.stocks[symbol].quantity = quantity;
-                }
-                if (purchasePrice !== undefined) {
-                    this.stocks[symbol].purchasePrice = purchasePrice;
                 }
                 if (purchaseDate !== undefined) {
                     this.stocks[symbol].purchaseDate = purchaseDate;
@@ -66,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr>
                     <th>Symbol</th>
                     <th>Quantity</th>
-                    <th>Purchase Price</th>
                     <th>Purchase Date</th>
                     <th>Sector</th>
                     <th>Current Price</th>
@@ -76,21 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             for (const symbol in this.stocks) {
                 const details = this.stocks[symbol];
-                const currentPrice = await getRealTimePrice(symbol);
+                const currentPrice = await getClosingPrice(symbol, details.purchaseDate);
                 if (currentPrice !== null) {
                     const row = document.createElement('tr');
                     const quantity = details.quantity;
-                    const purchasePrice = details.purchasePrice;
                     const purchaseDate = details.purchaseDate;
                     const sector = details.sector;
                     const currentValue = quantity * currentPrice;
                     const purchaseDateObj = new Date(purchaseDate);
                     const years = (new Date() - purchaseDateObj) / (365.25 * 24 * 60 * 60 * 1000);
-                    const cagr = years > 0 ? calculateCAGR(purchasePrice, currentPrice, years) : 0;
+                    const cagr = years > 0 ? calculateCAGR(currentPrice, currentValue, years) : 0;
                     row.innerHTML = `
                         <td>${symbol}</td>
                         <td>${quantity}</td>
-                        <td>${purchasePrice}</td>
                         <td>${purchaseDate}</td>
                         <td>${sector}</td>
                         <td>${currentPrice.toFixed(2)}</td>
@@ -100,37 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     table.appendChild(row);
                 }
             }
-            document.getElementById('output').innerHTML = '';
-            document.getElementById('output').appendChild(table);
-        },
-
-        futureProjection: async function(expectedRateOfReturn) {
-            const projectionTable = document.createElement('table');
-            projectionTable.innerHTML = `
-                <tr>
-                    <th>Symbol</th>
-                    <th>Current Value</th>
-                    <th>Projected Value</th>
-                </tr>
-            `;
-            for (const symbol in this.stocks) {
-                const details = this.stocks[symbol];
-                const currentPrice = await getRealTimePrice(symbol);
-                if (currentPrice !== null) {
-                    const quantity = details.quantity;
-                    const currentValue = quantity * currentPrice;
-                    const projectedValue = currentValue * (1 + expectedRateOfReturn);
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${symbol}</td>
-                        <td>${currentValue.toFixed(2)}</td>
-                        <td>${projectedValue.toFixed(2)}</td>
-                    `;
-                    projectionTable.appendChild(row);
-                }
-            }
-            document.getElementById('output').innerHTML = '';
-            document.getElementById('output').appendChild(projectionTable);
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '';
+            outputDiv.appendChild(table);
+            outputDiv.style.textAlign = 'center'; // Center align the table
+            table.style.borderCollapse = 'collapse'; // Collapse the borders
+            table.style.border = '2px solid black'; // Add border to the table
+            table.style.margin = 'auto'; // Center align the table within its container
         },
 
         savePortfolio: function() {
@@ -154,10 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addStockBtn').addEventListener('click', () => {
         const symbol = prompt("Enter symbol:");
         const quantity = parseInt(prompt("Enter quantity:") || 0);
-        const purchasePrice = parseFloat(prompt("Enter purchase price:") || 0);
         const purchaseDate = prompt("Enter purchase date (YYYY-MM-DD):") || "";
         const sector = prompt("Enter sector:") || "";
-        portfolio.addStock(symbol, quantity, purchasePrice, purchaseDate, sector);
+        portfolio.addStock(symbol, quantity, purchaseDate, sector);
     });
 
     document.getElementById('removeStockBtn').addEventListener('click', () => {
@@ -168,19 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('editStockBtn').addEventListener('click', () => {
         const symbol = prompt("Enter symbol to edit:");
         const quantity = parseInt(prompt("Enter new quantity (leave blank to keep current):") || undefined);
-        const purchasePrice = parseFloat(prompt("Enter new purchase price (leave blank to keep current):") || undefined);
         const purchaseDate = prompt("Enter new purchase date (YYYY-MM-DD) (leave blank to keep current):") || undefined;
         const sector = prompt("Enter new sector (leave blank to keep current):") || undefined;
-        portfolio.editStock(symbol, quantity, purchasePrice, purchaseDate, sector);
+        portfolio.editStock(symbol, quantity, purchaseDate, sector);
     });
 
     document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
         portfolio.displayPortfolio();
-    });
-
-    document.getElementById('futureProjectionBtn').addEventListener('click', () => {
-        const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
-                portfolio.futureProjection(expectedRateOfReturn);
     });
 
     document.getElementById('savePortfolioBtn').addEventListener('click', () => {
@@ -191,4 +162,3 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolio.loadPortfolio();
     });
 });
-
