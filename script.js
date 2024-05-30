@@ -178,9 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolio.displayPortfolio();
     });
 
-    document.getElementById('futureProjectionBtn').addEventListener('click', () => {
+    document.getElementById('futureProjectionBtn').addEventListener('click', () =>
+{
         const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
-                portfolio.futureProjection(expectedRateOfReturn);
+        portfolio.futureProjection(expectedRateOfReturn);
     });
 
     document.getElementById('savePortfolioBtn').addEventListener('click', () => {
@@ -191,4 +192,3 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolio.loadPortfolio();
     });
 });
-
