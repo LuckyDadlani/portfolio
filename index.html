@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .image-container {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            border: 2px solid black;
+        }
+        .footer-image {
+            max-width: 100%;
+            max-height: 100%;
         }
     </style>
 </head>
@@ -32,13 +40,12 @@
         </div>
         <div id="output"></div>
     </div>
-    <div class="image-container">
-    </div>
     <footer>
-        <p>      Investments in stock markets are subject to market risk.
-        The stock market in India is regulated by the Securities and Exchange Board of India (SEBI). 
-            Users are advised to refrain from engaging in any malpractices.</p>
+        <p>Investments in stock markets are subject to market risk. The stock market in India is regulated by the Securities and Exchange Board of India (SEBI). Users are advised to refrain from engaging in any malpractices.</p>
     </footer>
+    <div class="image-container" id="portfolioImage" style="display: none;">
+        <img src="https://www.livemint.com/lm-img/img/2023/12/03/1600x900/3-0-112780637-iStock-1205581595-0_1679843694833_1701620471207.jpg" alt="Investment" class="footer-image">
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
