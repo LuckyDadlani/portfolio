@@ -1,91 +1,64 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-    color: #fff;
+    background-color: black; /* Set the background color to black */
+    color: white; /* Set text color to white */
 }
 
 .container {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
-    background: #1c1c1c;
-    border: 2px solid #444;
-    border-radius: 8px;
+    border: 2px solid white; /* Add border to the container */
 }
 
 h1 {
-    text-align: center;
-    color: #fff;
-}
-
-.header-img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto 20px auto;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 .button-segments {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .button-box {
-    background-color: #2c2c2c;
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 20px;
-    flex: 1 1 30%;
-    margin: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 button {
-    width: 100%;
-    margin: 5px 0;
     padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-#output {
-    margin-top: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-}
-
 footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #007bff;
-    color: white;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    margin-top: 50px;
+}
+
+.footer p {
+    font-size: 14px;
+    color: #666;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: 2px solid white; /* Add border to the image container */
+}
+
+.footer-image {
+    max-width: 100%;
+    max-height: 100%;
 }
