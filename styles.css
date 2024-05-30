@@ -1,49 +1,50 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-}
-
-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-main {
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    align-items: center;
+    height: 100vh;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
 .container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 80%;
     max-width: 800px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-nav {
-    padding: 20px;
-    text-align: center;
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 button {
-    margin: 5px;
-    padding: 10px 20px;
+    padding: 15px 25px;
     font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
     cursor: pointer;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
     transition: background-color 0.3s ease;
 }
 
@@ -52,9 +53,32 @@ button:hover {
 }
 
 #output {
-    border: 1px solid #ccc;
-    padding: 20px;
-    min-height: 200px;
-    background-color: #f9f9f9;
-    border-radius: 0 0 5px 5px;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
+
+footer {
+    margin-top: 20px;
+    color: #333;
+}
+
+footer p {
+    margin: 0;
 }
