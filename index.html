@@ -5,26 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Portfolio Manager</h1>
-    </header>
-    <main>
-        <div class="container">
-            <nav>
-                <button onclick="showAddStockForm()">Add Stock</button>
-                <button onclick="showRemoveStockForm()">Remove Stock</button>
-                <button onclick="showEditStockForm()">Edit Stock</button>
-                <button onclick="displayPortfolio()">Display Portfolio</button>
-                <button onclick="projectFutureValues()">Future Projection</button>
-                <button onclick="savePortfolio()">Save Portfolio</button>
-                <button onclick="loadPortfolio()">Load Portfolio</button>
-                <button onclick="exit()">Exit</button>
-            </nav>
+    <div class="container">
+        <header>
+            <h1>Portfolio Manager</h1>
+        </header>
+        <main>
+            <div class="buttons">
+                <button id="addStockBtn">Add Stock</button>
+                <button id="removeStockBtn">Remove Stock</button>
+                <button id="editStockBtn">Edit Stock</button>
+                <button id="displayPortfolioBtn">Display Portfolio</button>
+                <button id="futureProjectionBtn">Future Projection</button>
+                <button id="savePortfolioBtn">Save Portfolio</button>
+                <button id="loadPortfolioBtn">Load Portfolio</button>
+            </div>
             <div id="output"></div>
-        </div>
-    </main>
+        </main>
+        <footer>
+            <p>&copy; 2024 Portfolio Manager</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
