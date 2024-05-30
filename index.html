@@ -5,30 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Manager</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .image-container {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Portfolio Manager</h1>
-        <img src="https://thumbs.dreamstime.com/b/portfolio-management-businessman-hologram-concept-futuristic-portfolio-management-businessman-hologram-concept-177205308.jpg" alt="Portfolio Management" class="header-img">
+        <img src="https://img.etimg.com/thumb/height-450,width-600,imgsize-62466,msid-107896739/stock-market-highlights-how-to-read-nifty-price-momentum-indicators-for-fridays-trade.jpg" alt="Stock Market" class="header-img">
         <div class="button-segments">
-            <div class="button-box">
+            <div class="button-box" id="addRemoveEditBox">
                 <button id="addStockBtn">Add Stock</button>
                 <button id="removeStockBtn">Remove Stock</button>
                 <button id="editStockBtn">Edit Stock</button>
             </div>
-            <div class="button-box">
+            <div class="button-box" id="displayFutureBox">
                 <button id="displayPortfolioBtn">Display Portfolio</button>
                 <button id="futureProjectionBtn">Future Projection</button>
             </div>
-            <div class="button-box">
+            <div class="button-box" id="saveLoadBox">
                 <button id="savePortfolioBtn">Save Portfolio</button>
                 <button id="loadPortfolioBtn">Load Portfolio</button>
             </div>
         </div>
         <div id="output"></div>
     </div>
+    <div class="image-container">
+        <img src="https://thumbs.dreamstime.com/b/portfolio-management-businessman-hologram-concept-futuristic-portfolio-management-businessman-hologram-concept-177205308.jpg" alt="Portfolio Management" class="secondary-img">
+    </div>
     <footer>
-        <p>© 2024 Portfolio Manager. All rights reserved.</p>
+        <p>Investments in stock markets are subject to market risk. The stock market in India is regulated by the Securities and Exchange Board of India (SEBI). Users are advised to refrain from engaging in any malpractices.</p>
     </footer>
     <script src="script.js"></script>
 </body>
