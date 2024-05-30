@@ -119,8 +119,26 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.getElementById('addStockBtn').addEventListener('click', () => {
-        // Implement add stock functionality here
-    });
+    const symbol = prompt("Enter the stock symbol (e.g., AAPL):");
+    const quantity = parseInt(prompt("Enter the quantity:"));
+    const purchasePrice = parseFloat(prompt("Enter the purchase price:"));
+    const purchaseDate = prompt("Enter the purchase date (YYYY-MM-DD):");
+    const sector = prompt("Enter the sector:");
+
+    // Validate user input
+    if (symbol && !isNaN(quantity) && !isNaN(purchasePrice) && purchaseDate && sector) {
+        // Add the stock to the portfolio
+        portfolio.addStock(symbol, quantity, purchasePrice, purchaseDate, sector);
+        // Optionally, display a message to the user confirming the addition
+        console.log(`Stock ${symbol} added successfully.`);
+        // Optionally, update the display of the portfolio immediately
+        portfolio.displayPortfolio();
+    } else {
+        // If any input is invalid, display an error message
+        console.log("Invalid input. Please enter valid information.");
+    }
+});
+
 
     document.getElementById('removeStockBtn').addEventListener('click', () => {
         // Implement remove stock functionality here
