@@ -102,8 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     table.appendChild(row);
                 }
             }
-            document.getElementById('output').innerHTML = '';
-            document.getElementById('output').appendChild(table);
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '';
+            outputDiv.appendChild(table);
+            outputDiv.style.textAlign = 'center'; // Center align the table
+            table.style.borderCollapse = 'collapse'; // Collapse the borders
+            table.style.border = '2px solid black'; // Add border to the table
+            table.style.margin = 'auto'; // Center align the table within its container
         },
 
         futureProjection: async function(expectedRateOfReturn) {
@@ -131,8 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     projectionTable.appendChild(row);
                 }
             }
-            document.getElementById('output').innerHTML = '';
-            document.getElementById('output').appendChild(projectionTable);
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '';
+            outputDiv.appendChild(projectionTable);
+            outputDiv.style.textAlign = 'center'; // Center align the table
+            projectionTable.style.borderCollapse = 'collapse'; // Collapse the borders
+            projectionTable.style.border = '2px solid black'; // Add border to the table
+            projectionTable.style.margin = 'auto'; // Center align the table within its container
         },
 
         savePortfolio: function() {
@@ -177,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
         portfolio.displayPortfolio();
     });
+
     document.getElementById('futureProjectionBtn').addEventListener('click', () => {
         const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
         portfolio.futureProjection(expectedRateOfReturn);
@@ -190,3 +201,4 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolio.loadPortfolio();
     });
 });
+        
