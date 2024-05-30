@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentPrice = parseFloat(data['Time Series (5min)'][lastRefreshed]['1. open']);
             return currentPrice;
         } catch (error) {
-            console.error("Error fetching data for symbol:", symbol, error);
+            console.error("Error fetching data for symbol:", symbol);
             return null;
         }
     }
@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <th>CAGR</th>
                 </tr>
             `;
-
             for (const symbol in this.stocks) {
                 const details = this.stocks[symbol];
                 const currentPrice = await getRealTimePrice(symbol);
@@ -94,20 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${purchasePrice}</td>
                         <td>${purchaseDate}</td>
                         <td>${sector}</td>
-                        <td>${currentPrice.toFixed(2)}</td>
-                        <td>${currentValue.toFixed(2)}</td>
+                        <td>${currentPrice}</td>
+                        <td>${currentValue}</td>
                         <td>${(cagr * 100).toFixed(2)}%</td>
                     `;
                     table.appendChild(row);
                 }
             }
-            const outputElement = document.getElementById('output');
-            if (outputElement) {
-                outputElement.innerHTML = '';
-                outputElement.appendChild(table);
-            } else {
-                console.error("Output element not found.");
-            }
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('output').appendChild(table);
         },
 
         futureProjection: async function(expectedRateOfReturn) {
@@ -129,19 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${symbol}</td>
-                        <td>${currentValue.toFixed(2)}</td>
-                        <td>${projectedValue.toFixed(2)}</td>
+                        <td>${currentValue}</td>
+                        <td>${projectedValue}</td>
                     `;
                     projectionTable.appendChild(row);
                 }
             }
-            const outputElement = document.getElementById('output');
-            if (outputElement) {
-                outputElement.innerHTML = '';
-                outputElement.appendChild(projectionTable);
-            } else {
-                console.error("Output element not found.");
-            }
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('output').appendChild(projectionTable);
         },
 
         savePortfolio: function() {
@@ -161,47 +150,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Functions to handle menu options
-    function showAddStockForm() {
+    // Attach event listeners to buttons
+    document.getElementById('addStockBtn').addEventListener('click', () => {
         // Implement add stock functionality here
-    }
+    });
 
-    function showRemoveStockForm() {
+    document.getElementById('removeStockBtn').addEventListener('click', () => {
         // Implement remove stock functionality here
-    }
+    });
 
-    function showEditStockForm() {
+    document.getElementById('editStockBtn').addEventListener('click', () => {
         // Implement edit stock functionality here
-    }
+    });
 
-    function displayPortfolio() {
+    document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
         portfolio.displayPortfolio();
-    }
+    });
 
-    function projectFutureValues() {
+    document.getElementById('futureProjectionBtn').addEventListener('click', () => {
         const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
         portfolio.futureProjection(expectedRateOfReturn);
-    }
+    });
 
-    function savePortfolio() {
+    document.getElementById('savePortfolioBtn').addEventListener('click', () => {
         portfolio.savePortfolio();
-    }
+    });
 
-    function loadPortfolio() {
+    document.getElementById('loadPortfolioBtn').addEventListener('click', () => {
         portfolio.loadPortfolio();
-    }
-
-    function exit() {
-        console.log("Exiting...");
-    }
-
-    // Example event listener setup (assumes existence of buttons with corresponding IDs)
-    document.getElementById('addStockBtn').addEventListener('click', showAddStockForm);
-    document.getElementById('removeStockBtn').addEventListener('click', showRemoveStockForm);
-    document.getElementById('editStockBtn').addEventListener('click', showEditStockForm);
-    document.getElementById('displayPortfolioBtn').addEventListener('click', displayPortfolio);
-    document.getElementById('projectFutureValuesBtn').addEventListener('click', projectFutureValues);
-    document.getElementById('savePortfolioBtn').addEventListener('click', savePortfolio);
-    document.getElementById('loadPortfolioBtn').addEventListener('click', loadPortfolio);
-    document.getElementById('exitBtn').addEventListener('click', exit);
+    });
 });
