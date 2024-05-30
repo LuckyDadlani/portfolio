@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ALPHA_VANTAGE_API_KEY = 'PI3CT37V5KD1D5E2';
+    const ALPHA_VANTAGE_API_KEY = 'RC8L94IHH9CWILQA';
     const ALPHA_VANTAGE_URL = 'https://www.alphavantage.co/query';
 
     async function getRealTimePrice(symbol) {
@@ -100,52 +100,73 @@ document.addEventListener('DOMContentLoaded', () => {
                     table.appendChild(row);
                 }
             }
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '';
-            outputDiv.appendChild(table);
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('output').appendChild(table);
         },
 
         futureProjection: async function(expectedRateOfReturn) {
-            // Implement future projection functionality here
+            const projectionTable = document.createElement('table');
+            projectionTable.innerHTML = `
+                <tr>
+                    <th>Symbol</th>
+                    <th>Current Value</th>
+                    <th>Projected Value</th>
+                </tr>
+            `;
+            for (const symbol in this.stocks) {
+                const details = this.stocks[symbol];
+                const currentPrice = await getRealTimePrice(symbol);
+                if (currentPrice !== null) {
+                    const quantity = details.quantity;
+                    const currentValue = quantity * currentPrice;
+                    const projectedValue = currentValue * (1 + expectedRateOfReturn);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${symbol}</td>
+                        <td>${currentValue}</td>
+                        <td>${projectedValue}</td>
+                    `;
+                    projectionTable.appendChild(row);
+                }
+            }
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('output').appendChild(projectionTable);
         },
 
         savePortfolio: function() {
-            // Implement save portfolio functionality here
+            const jsonPortfolio = JSON.stringify(this.stocks);
+            localStorage.setItem('portfolio', jsonPortfolio);
+            console.log("Portfolio saved successfully.");
         },
 
         loadPortfolio: function() {
-            // Implement load portfolio functionality here
+            const jsonPortfolio = localStorage.getItem('portfolio');
+            if (jsonPortfolio !== null) {
+                this.stocks = JSON.parse(jsonPortfolio);
+                console.log("Portfolio loaded successfully.");
+            } else {
+                console.log("No portfolio found.");
+            }
         }
     };
 
+    // Attach event listeners to buttons
     document.getElementById('addStockBtn').addEventListener('click', () => {
-    const symbol = prompt("Enter the stock symbol (e.g., AAPL):");
-    const quantity = parseInt(prompt("Enter the quantity:"));
-    const purchasePrice = parseFloat(prompt("Enter the purchase price:"));
-    const purchaseDate = prompt("Enter the purchase date (YYYY-MM-DD):");
-    const sector = prompt("Enter the sector:");
-
-    // Validate user input
-    if (symbol && !isNaN(quantity) && !isNaN(purchasePrice) && purchaseDate && sector) {
-        // Add the stock to the portfolio
-        portfolio.addStock(symbol, quantity, purchasePrice, purchaseDate, sector);
-        // Optionally, display a message to the user confirming the addition
-        console.log(`Stock ${symbol} added successfully.`);
-        // Optionally, update the display of the portfolio immediately
-        portfolio.displayPortfolio();
-    } else {
-        // If any input is invalid, display an error message
-        console.log("Invalid input. Please enter valid information.");
-    }
-});
-
+        // You can implement add stock functionality here
+        // For example:
+        // portfolio.addStock('AAPL', 10, 150.50, '2022-01-01', 'Technology');
+    });
 
     document.getElementById('removeStockBtn').addEventListener('click', () => {
-        // Implement remove stock functionality here
+        // You can implement remove stock functionality here
+        // For example:
+        // portfolio.removeStock('AAPL');
     });
 
     document.getElementById('editStockBtn').addEventListener('click', () => {
-        // Implement edit stock functionality here
+        // You can implement edit stock functionality here
+        // For example:
+        // portfolio.editStock('AAPL', 15, 160.75, '2022-02-01', 'Technology');
     });
 
     document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
