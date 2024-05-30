@@ -150,17 +150,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Attach event listeners to buttons
+    // Button event listeners
     document.getElementById('addStockBtn').addEventListener('click', () => {
-        // Implement add stock functionality here
+        const symbol = prompt("Enter symbol:");
+        const quantity = parseInt(prompt("Enter quantity:") || 0);
+        const purchasePrice = parseFloat(prompt("Enter purchase price:") || 0);
+        const purchaseDate = prompt("Enter purchase date (YYYY-MM-DD):") || "";
+        const sector = prompt("Enter sector:") || "";
+        portfolio.addStock(symbol, quantity, purchasePrice, purchaseDate, sector);
     });
 
     document.getElementById('removeStockBtn').addEventListener('click', () => {
-        // Implement remove stock functionality here
+        const symbol = prompt("Enter symbol to remove:");
+        portfolio.removeStock(symbol);
     });
 
     document.getElementById('editStockBtn').addEventListener('click', () => {
-        // Implement edit stock functionality here
+        const symbol = prompt("Enter symbol to edit:");
+        const quantity = parseInt(prompt("Enter new quantity (leave blank to keep current):") || undefined);
+        const purchasePrice = parseFloat(prompt("Enter new purchase price (leave blank to keep current):") || undefined);
+        const purchaseDate = prompt("Enter new purchase date (YYYY-MM-DD) (leave blank to keep current):") || undefined;
+        const sector = prompt("Enter new sector (leave blank to keep current):") || undefined;
+        portfolio.editStock(symbol, quantity, purchasePrice, purchaseDate, sector);
     });
 
     document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
@@ -169,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('futureProjectionBtn').addEventListener('click', () => {
         const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
-        portfolio.futureProjection(expectedRateOfReturn);
+                portfolio.futureProjection(expectedRateOfReturn);
     });
 
     document.getElementById('savePortfolioBtn').addEventListener('click', () => {
@@ -180,3 +191,4 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolio.loadPortfolio();
     });
 });
+
