@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 purchaseDate,
                 sector
             };
+            console.log(`Stock ${symbol} added successfully.`);
         },
 
         removeStock: function(symbol) {
@@ -176,17 +177,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('displayPortfolioBtn').addEventListener('click', () => {
         portfolio.displayPortfolio();
-    });
-    document.getElementById('futureProjectionBtn').addEventListener('click', () => {
-        const expectedRateOfReturn = parseFloat(prompt("Enter expected rate of return (as a decimal):"));
-        portfolio.futureProjection(expectedRateOfReturn);
-    });
-
-    document.getElementById('savePortfolioBtn').addEventListener('click', () => {
-        portfolio.savePortfolio();
-    });
-
-    document.getElementById('loadPortfolioBtn').addEventListener('click', () => {
-        portfolio.loadPortfolio();
     });
 });
